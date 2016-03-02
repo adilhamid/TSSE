@@ -47,19 +47,22 @@
     position: absolute;
     margin-right: -250px;
 }
-
 #heading {
+    text-indent: 20px;
+    line-height: 14px;
     font-size: 20px;
-    height: 20px;
-    line-height: 60px;
 }
 
+#compare {
+    position: absolute;
+    bottom: 0;
+}
 /* Sidebar Styles */
 
 .sidebar-nav {
     position: absolute;
     top: 0;
-    width: 200px;
+    width: 250px;
     margin: 0;
     padding: 0;
     list-style: none;
@@ -67,30 +70,26 @@
 
 .sidebar-nav li {
     text-indent: 20px;
-    line-height: 40px;
+    line-height: 15px;
 }
 
-
-.sidebar-nav > .sidebar-brand {
-    height: 20px;
-    font-size: 14px;
-    line-height: 60px;
+.sidebar-nav li a {
+    display: block;
+    text-decoration: none;
+    color: #999999;
 }
 
-.sidebar-brand-heading > .sidebar-brand {
-    height: 15px;
-    font-size: 14px;
-    line-height: 60px;
+.sidebar-nav li a:hover {
+    text-decoration: none;
+    color: #fff;
+    background: rgba(255,255,255,0.2);
 }
 
-.sidebar-nav-heading {
-    position: absolute;
-    top: 0;
-    width: 200px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
+.sidebar-nav li a:active,
+.sidebar-nav li a:focus {
+    text-decoration: none;
 }
+
 
 .sidebar-nav > .sidebar-brand a {
     color: #999999;
@@ -127,4 +126,4 @@
         position: relative;
         margin-right: 0;
     }
-} 
+}
