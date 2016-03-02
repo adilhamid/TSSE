@@ -69,6 +69,8 @@ function addGridView(items) {
       
       $('#productlist').append(str);
    });
+   //$('#hola').append('<h3>hola</h3>')
+   $('#hola').append('<div class="panel panel-primary"><div class="text-center"><a class="btn btn-primary btn-block">Compare</a></div></div>');
 }
 $(function() {
     var ref = new Firebase('https://blinding-heat-6421.firebaseio.com/dummy');
@@ -86,7 +88,7 @@ $(function() {
    
    // add the button for submittind filter
    $('#filters').append('<li class="sidebar-brand"><button type="submit" class="btn btn-primary" id="button">Submit</button></li>');
-    
+   
    /* function applyFilters() {         
      var allVals = [];
      $('#filters input:checked').each(function() {
@@ -103,6 +105,7 @@ $(function() {
    ref.on("value", function(snapshot) {
       console.log(snapshot.val()[0][0].price);
       addGridView(snapshot.val());
+      
    }, function (errorObject) {
    console.log("The read failed: " + errorObject.code);
    });
