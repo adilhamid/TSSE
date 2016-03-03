@@ -2,7 +2,7 @@
     width: 550px;
     height: 300px;
     margin-bottom: 60px;
-    margin-left: 290px;
+    margin-left: 37%;
 }
 /* Since positioning the image, we need to help out the caption */
  .carousel-caption {
@@ -22,17 +22,17 @@
     height: 300px;
 }
 .search {
-    width: 550px;
+    width: 330px;
     height: 30px;
     margin-bottom: 60px;
-    margin-left: 450px;
+    margin-left: 40%;
 }
 
 .category {
-    width: 400px;
+    width: 190px;
     height: 30px;
     margin-bottom: 60px;
-    margin-left: 540px;
+    margin-left: 43%;
 }
 
 @media (min-width: 768px) {
