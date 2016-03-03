@@ -19,7 +19,7 @@ function addGridView(items,wide_column, selector, info) {
       str += '<h4 class="text-center"><span class="label label-info">' + company + '</span></h4>'
       //str += '<div class=caption>'
       str += '<a href =' + reviews + ' ><img src='+ image + ' class="img-responsive"></a>'
-      
+      str += '<p class="text-center"><b> Click image to buy!</b></p>';
       str += '<div class="caption"><div class="row">'
       str += '<div class="col-md-6 col-xs-6">';
       var name = "";
