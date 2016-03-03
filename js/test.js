@@ -13,6 +13,7 @@ ebay_urls.push('http://www.ebay.com/itm/HTC-One-M8-OP6B110-16GB-Gunmetal-Gray-Un
 ebay_urls.push('http://www.ebay.com/itm/Brand-New-Motorola-MOTO-G-Android-XT1032-Black-Unlocked-Smartphone-WIFI-/262293669024?hash=item3d11ebc4a0:g:sooAAOSwqrtWmxcK');
 ebay_urls.push('http://www.ebay.com/itm/Apple-iPhone-6S-16GB-Factory-GSM-and-CDMA-Unlocked-Smartphone-/121906496452?var=&hash=item1c623183c4:m:mbKvqYExfzjlvPnuiRZk3KQ');
 
+
 new_eng_urls.push('http://www.newegg.com/Product/Product.aspx?Item=9SIA3T536K4247&cm_re=samsung_galaxy_s5-_-23B-0002-001P9-_-Product');
 new_eng_urls.push('http://www.newegg.com/Product/Product.aspx?Item=N82E16875502228&cm_re=htc_one_m8-_-75-502-228-_-Product');
 new_eng_urls.push('http://www.newegg.com/Product/Product.aspx?Item=N82E16875209400&cm_re=moto_g-_-75-209-400-_-Product');

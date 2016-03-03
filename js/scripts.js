@@ -12,75 +12,8 @@ var filter_obj = {'Price':price_obj,
                   'Internal Storage':internal_storage
                  };
 
-function addGridView(items) {
-   $.each(items, function(i, value) {
-      console.log(value);
-      var str = '<div class="col-sm-6 col-md-3"><div class="thumbnail">';
-      var company = value[0].name.split(" ")[0];
-      var image = value[0].image;
-      
-      var rating = value[0].rating;    
-      rating = rating.split(" ")[0];
-     
-      var reviews = value[0].reviews_location;
-      console.log(image);
-      str += '<h4 class="text-center"><span class="label label-info">' + company + '</span></h4>'
-      //str += '<div class=caption>'
-      str += '<a href =' + reviews + ' ><img src='+ image + ' class="img-responsive"></a>'
-      
-      str += '<div class="caption"><div class="row">'
-      str += '<div class="col-md-6 col-xs-6">';
-      var name = "";
-      var full_name = value[0].name.split(" ");
-      
-      for(var i = 1; i < full_name.length; ++i){
-         name += (full_name[i] + " ");
-      }
-      str += '<h4>' + name + '</h4>';
-      str += '</div>';
-      
-      str += '<div class="col-md-6 col-xs-6">';
-      str += '<h4>' + value[0].price + '</h4>';
-      str += '</div></div>';
-      
-      var internal_storage = value[0].internal_storage;
-      var ram = value[0].ram;
-      var screen_size = value[0].screen_size;
-      var camera =  value[0].camera.match(/\d+/)[0];
-      str += '<p class="text-center">';
-      str += (ram + ' Ram' + ',  ' + internal_storage + ',  ' + screen_size +  ',  ' + camera + 'MP');
-      str += '</p>';
-          
-      str += '<div class="row">';
-      // TO DO add the ratings
-      
-      
-      str += '<div class="col-md-6 col-xs-6"><a href="' + reviews + '" class="btn btn-success btn-product"><span class="glyphicon glyphicon-book"></span> Reviews</a></div>';
-      
-      str += '<div class="col-md-6 col-xs-6"><a href="#" class="btn btn-primary btn-product"><span class="glyphicon glyphicon-star"></span> '+ rating + ' / 5.0' +'</a></div>';
-      
-      str += '</div>';
-      
-      str += '<br/>';
-      str += '<label><input type="checkbox" value=""> Check to compare</label>';
-      
-      str += '</div>';    
-      
-      str += '</div></div>';
-      
-      $('#productlist').append(str);
-   });
-   //$('#hola').append('<h3>hola</h3>')
-   $('#hola').append('<div class="panel panel-primary"><div class="text-center"><a class="btn btn-primary btn-block">Compare</a></div></div>');
-}
-$(function() {
-   
-   var ref = new Firebase('https://blinding-heat-6421.firebaseio.com/dummy');
-   
-   // add the header to each page
-   $('#header').load('header.html');
-
-   // inject the filters  
+function addFilters() {
+    // inject the filters  
    $.each(filter_obj, function(i,val) {
       $('#filters').append('<li class="sidebar-brand"><p class="text-primary" id ="heading"><label><b>'+i+'</b></label><p></li>');
       $.each(val, function(inner_i, inner_val) {
@@ -91,6 +24,15 @@ $(function() {
    
    // add the button for submittind filter
    $('#filters').append('<li class="sidebar-brand"><button type="submit" class="btn btn-primary" id="button">Submit</button></li>');
+}
+$(function() {
+   
+   var ref = new Firebase('https://blinding-heat-6421.firebaseio.com/dummy');
+   
+   // add the header to each page
+   $('#header').load('header.html');
+
+  
    
    /* function applyFilters() {         
      var allVals = [];
@@ -107,10 +49,11 @@ $(function() {
    
    ref.on("value", function(snapshot) {
       console.log(snapshot.val()[0][0].price);
-      addGridView(snapshot.val());
+      addFilters();
+      addGridView(snapshot.val(), false,"productlist",true);
       
    }, function (errorObject) {
    console.log("The read failed: " + errorObject.code);
    });
-   
+  
 });
