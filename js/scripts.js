@@ -18,10 +18,15 @@ function addGridView(items) {
       var str = '<div class="col-sm-6 col-md-3"><div class="thumbnail">';
       var company = value[0].name.split(" ")[0];
       var image = value[0].image;
+      
+      var rating = value[0].rating;    
+      rating = rating.split(" ")[0];
+     
+      var reviews = value[0].reviews_location;
       console.log(image);
       str += '<h4 class="text-center"><span class="label label-info">' + company + '</span></h4>'
       //str += '<div class=caption>'
-      str += '<img src='+ image + ' class="img-responsive">'
+      str += '<a href =' + reviews + ' ><img src='+ image + ' class="img-responsive"></a>'
       
       str += '<div class="caption"><div class="row">'
       str += '<div class="col-md-6 col-xs-6">';
@@ -49,10 +54,6 @@ function addGridView(items) {
       str += '<div class="row">';
       // TO DO add the ratings
       
-      var rating = value[0].rating;    
-      rating = rating.split(" ")[0];
-     
-      var reviews = value[0].reviews_location;
       
       str += '<div class="col-md-6 col-xs-6"><a href="' + reviews + '" class="btn btn-success btn-product"><span class="glyphicon glyphicon-book"></span> Reviews</a></div>';
       
