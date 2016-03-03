@@ -73,10 +73,12 @@ function addGridView(items) {
    $('#hola').append('<div class="panel panel-primary"><div class="text-center"><a class="btn btn-primary btn-block">Compare</a></div></div>');
 }
 $(function() {
-    var ref = new Firebase('https://blinding-heat-6421.firebaseio.com/dummy');
+   
+   var ref = new Firebase('https://blinding-heat-6421.firebaseio.com/dummy');
+   
    // add the header to each page
    $('#header').load('header.html');
-   
+
    // inject the filters  
    $.each(filter_obj, function(i,val) {
       $('#filters').append('<li class="sidebar-brand"><p class="text-primary" id ="heading"><label><b>'+i+'</b></label><p></li>');
