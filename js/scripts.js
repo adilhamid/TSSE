@@ -1,4 +1,4 @@
-// globals
+//globals
 //filters 
 var price_obj = {0:' Below $200' ,1:' $200 - $300',2:' Above $300'};
 var price_array_helper = ['0 200','200 300','300 1000'];
@@ -53,14 +53,47 @@ function checkforEqualityFilter(current_item,ram,internal_storage){
    return (ram_true && internal_storage_true);
 }
 
+function checkforRange(current_item, price,screen,camera) {
+   var price_true = false;
+   var screen_true = false;
+   var camera_true = false;
+   
+   if(price.length == 0) {
+      price_true = true;
+   }
+   
+   if(screen.length == 0) {
+      screen_true = true;
+   }
+   
+   if(camera.length == 0) {
+      camera_true = true;
+   }
+   
+   if(evaluateBoundaries(price, current_item,0)) {
+      price_true = true;
+   }
+   
+   if(evaluateBoundaries(screen,current_item,1)) {
+      screen_true = true;
+   }
+   
+   if(evaluateBoundaries(camera, current_item,2)) {
+      camera_true = true;
+   }
+
+   return (price_true && screen_true && camera_true);
+}
+
 function applyFilters(price, ram, screen, camera, internal_storage) {
    var filtered_phones = [];
    
    $.each(all_items, function(i, value) {
-      if(checkforEqualityFilter(value,ram,internal_storage)) {
+      if(checkforEqualityFilter(value, ram, internal_storage) && checkforRange(value, price, screen, camera)){
          filtered_phones.push(value);
       }
    });
+   console.log(filtered_phones);
    addGridViewIterator(filtered_phones,false,"productlist",true);
 }
           
@@ -113,7 +146,8 @@ function addFilters() {
       addToArray(inputElements, checked_storage);
       console.log(checked_storage);
       if(checked_price.length == 0 && checked_ram.length == 0 && checked_screen.length == 0 && checked_camera.length == 0 && checked_storage.length == 0){
-         // do nothing
+         removeGridIterator(all_items,'productlist');
+         addGridViewIterator(all_items, false, 'productlist', true);
       } else {
          removeGridIterator(all_items,'productlist');
          //$('#hola').empty();

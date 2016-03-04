@@ -6,12 +6,15 @@ function addGridViewIterator(items,wide_column, selector,info) {
       num_rows = items.length / per_item;
    } else {
       num_rows = items.length / per_item + 1;
-   }
+   } 
+   num_rows = parseInt(num_rows);
    console.log(num_rows);
    var counter = 0;
    for(var i = 0; i < num_rows; ++i) {
+      console.log(items.length);
       var current_batch = [];
       if((counter + per_item) > items.length) {
+         console.log("special case");
          var modulu = items.length % per_item;
          for(var j = counter; j < (counter+modulu); ++j ) {
             current_batch.push(items[j]);
@@ -48,6 +51,29 @@ function addToArray(inputElements, checked_array) {
          //console.log(inputElements[i].value);
       }
    }
+}
+
+function evaluateBoundaries(item, current_item, type) {
+   for(var i = 0; i < item.length; ++i) {
+      
+      var lower = item[i].split(' ')[0];
+      var higher = item[i].split(' ')[1];
+      var num = null;
+      
+      if(type == 0) {
+         num = Number(current_item[0].price.replace(/[^0-9\.]+/g,""));
+      } else if(type == 1) {
+         num = Number(current_item[0].screen_size.replace(/[^0-9\.]+/g,""));
+      } else if(type == 2){
+         num =Number(current_item[0].camera.replace(/[^0-9\.]+/g,""));
+      } 
+      
+      if(num >= Number(lower) && num <= Number(higher)) {
+         return true;
+      }
+   }
+   
+   return false;
 }
 
 function addGridView(items,wide_column, selector, info) {
@@ -124,13 +150,18 @@ function addButton(selector) {
    $('#hola').append('<div class="panel panel-primary"><div class="text-center"><button class="btn btn-primary btn-block" id ="compareButton">Compare</button></div></div>');
    
    // when the comparison button is clicked get the checked values and save it and redirect.
-   $('#compareButton').click(function() {
-      
+   $('#compareButton').click(function() {     
       var checkedValues = []; 
       var inputElements = document.getElementsByClassName('compareCheckbox');
       addToArray(inputElements,checkedValues);
-      localStorage.setItem('phones',checkedValues.toString());
-      document.location.href = 'compare.html';
+      if(checkedValues.length == 0 || checkedValues.length == 1) {
+         alert('Please select two smart phones to compare');
+      } else if(checkedValues.length > 2) {
+         alert('Please select only two smart phones to compare')
+      } else {
+         localStorage.setItem('phones',checkedValues.toString());
+         document.location.href = 'compare.html';   
+      }     
    });
 }
 
