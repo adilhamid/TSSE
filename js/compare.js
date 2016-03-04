@@ -20,10 +20,10 @@ function addView(items) {
        }
     });
    
-
    addGridView(common_phones,true,'productlist');
    addTableView(common_phones);
 }
+
 $(function() {
     // add the header to each page
    $('#header').load('header.html');

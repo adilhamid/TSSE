@@ -1,3 +1,55 @@
+var per_item = 4;
+
+function addGridViewIterator(items,wide_column, selector,info) {
+   var num_rows = 1;
+   if((items.length % per_item) == 0) {
+      num_rows = items.length / per_item;
+   } else {
+      num_rows = items.length / per_item + 1;
+   }
+   console.log(num_rows);
+   var counter = 0;
+   for(var i = 0; i < num_rows; ++i) {
+      var current_batch = [];
+      if((counter + per_item) > items.length) {
+         var modulu = items.length % per_item;
+         for(var j = counter; j < (counter+modulu); ++j ) {
+            current_batch.push(items[j]);
+         }
+      } else {
+         for(var j = counter; j < (counter+per_item); ++j) {
+            current_batch.push(items[j]);
+         }   
+      }
+      counter += per_item;
+      var currentSelector = selector + (i+1).toString(); 
+      addGridView(current_batch,wide_column,currentSelector,info);
+   }
+}
+
+function removeGridIterator(items, selector) {
+   var num_rows = 1;
+   if((items.length % per_item) == 0) {
+      num_rows = items.length / per_item;
+   } else {
+      num_rows = items.length / per_item + 1;
+   }
+   
+   for(var i = 0; i < num_rows; ++i) {
+      var currentSelector = selector + (i+1).toString(); 
+       $('#'+currentSelector).empty();
+   }
+}
+
+function addToArray(inputElements, checked_array) { 
+   for(var i=0; inputElements[i]; ++i){
+      if(inputElements[i].checked) {
+         checked_array.push(inputElements[i].value);
+         //console.log(inputElements[i].value);
+      }
+   }
+}
+
 function addGridView(items,wide_column, selector, info) {
       
    $.each(items, function(i, value) {
@@ -47,8 +99,6 @@ function addGridView(items,wide_column, selector, info) {
       }
                 
       str += '<div class="row">';
-      // TO DO add the ratings
-      
       
       str += '<div class="col-md-6 col-xs-6"><a href="' + reviews + '" class="btn btn-success btn-product"><span class="glyphicon glyphicon-book"></span> Reviews</a></div>';
       
@@ -67,9 +117,10 @@ function addGridView(items,wide_column, selector, info) {
       str += '</div></div>';
       
       $('#'+selector).append(str);
-   });
-   
-   //$('#hola').append('<h3>hola</h3>')
+   }); 
+}
+
+function addButton(selector) {
    $('#hola').append('<div class="panel panel-primary"><div class="text-center"><button class="btn btn-primary btn-block" id ="compareButton">Compare</button></div></div>');
    
    // when the comparison button is clicked get the checked values and save it and redirect.
@@ -77,12 +128,7 @@ function addGridView(items,wide_column, selector, info) {
       
       var checkedValues = []; 
       var inputElements = document.getElementsByClassName('compareCheckbox');
-      for(var i=0; inputElements[i]; ++i){
-         if(inputElements[i].checked){
-            checkedValues.push(inputElements[i].value);
-            //console.log(inputElements[i].value);
-         }
-      }
+      addToArray(inputElements,checkedValues);
       localStorage.setItem('phones',checkedValues.toString());
       document.location.href = 'compare.html';
    });
@@ -125,3 +171,4 @@ function addTableView(items) {
    
    $('#table').append(str);
 }
+

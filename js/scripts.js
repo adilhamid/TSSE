@@ -1,10 +1,24 @@
 // globals
 //filters 
-var price_obj = {0:' Below $100',1:' $100 - $200',2:' $200 - $300',3:' Above $300'};
+var price_obj = {0:' Below $200' ,1:' $200 - $300',2:' Above $300'};
+var price_array_helper = ['0 200','200 300','300 1000'];
+
 var ram_obj = {0:' 1GB',1:' 2GB',2:' 4GB'};
+var ram_helper_array = [1,2,4];
+
 var screen_size_obj = {0:' 4.3 - 4.7 inch', 1:' 4.7 - 5.7 inch', 2:' Above 5.7 inch'};
+var screen_helper_array = ['4.3 4.7', '4.7 5.7','5.7 6.7'];
+
 var camera_obj = {0:' Upto 2MP', 1:' 2.0 - 5.0 MP', 2:' 5.0 - 8.0 MP',3:' Above 8.0 MP'};
-var internal_storage = {0:' 16 GB', 1:' 32 GB', 2:' 64 GB'};
+var camera_helper = ['0 2','2 5','5 8','8 30'];
+
+var internal_storage = {0:' 8GB', 1:' 16 GB', 2:' 32 GB', 3:' 64 GB'};
+var internal_storage_helper = [8,16, 32, 64];
+
+var overall_helper = ['0 200','200 300','300 1000', 1, 2, 4, '4.3 4.7', '4.7 5.7', '5.7 6.7', '0 2','2 5','5 8','8 30', 8, 16, 32, 64];
+var all_items = null;
+
+
 var filter_obj = {'Price':price_obj,
                   'RAM':ram_obj,
                   'Screen Size':screen_size_obj,
@@ -12,45 +26,114 @@ var filter_obj = {'Price':price_obj,
                   'Internal Storage':internal_storage
                  };
 
+function checkforEqualityFilter(current_item,ram,internal_storage){
+   var ram_true = false;
+   var internal_storage_true = false;
+   
+   if(ram.length == 0) {
+      ram_true = true;
+   } 
+   
+   if(internal_storage.length == 0) {
+      internal_storage_true = true;
+   }
+   
+   for(var i = 0 ; i < ram.length; ++i) {
+      if(current_item[0].ram.match(/\d+/)[0] == ram[i]) {
+         ram_true = true;
+      }
+   }
+   
+   for(var i = 0 ; i < internal_storage.length; ++i) {
+      if(current_item[0].internal_storage.match(/\d+/)[0] == internal_storage[i]) {
+         internal_storage_true = true;
+      }
+   }
+   
+   return (ram_true && internal_storage_true);
+}
+
+function applyFilters(price, ram, screen, camera, internal_storage) {
+   var filtered_phones = [];
+   
+   $.each(all_items, function(i, value) {
+      if(checkforEqualityFilter(value,ram,internal_storage)) {
+         filtered_phones.push(value);
+      }
+   });
+   addGridViewIterator(filtered_phones,false,"productlist",true);
+}
+          
 function addFilters() {
     // inject the filters  
+   var count_filters = 0; 
    $.each(filter_obj, function(i,val) {
       $('#filters').append('<li class="sidebar-brand"><p class="text-primary" id ="heading"><label><b>'+i+'</b></label><p></li>');
       $.each(val, function(inner_i, inner_val) {
-         $('#filters').append('<li class="sidebar-brand"><label><input type="checkbox" value="">'+ inner_val + '</label></li>');
+         $('#filters').append('<li class="sidebar-brand"><label><input type="checkbox" class="' + i + '" value="' + overall_helper[count_filters] + '">'+ inner_val + '</label></li>');
+         ++count_filters;
       });
       $('#filters').append('<br />');
    });
    
    // add the button for submittind filter
    $('#filters').append('<li class="sidebar-brand"><button type="submit" class="btn btn-primary" id="button">Submit</button></li>');
-}
-$(function() {
    
+   $('#button').click( function(){
+      //$('#productlist').empty();
+      
+      var inputElements = document.getElementsByClassName('Price');
+      
+      // get the prices which are checked for filtering. 
+      var checked_price = []; 
+      addToArray(inputElements,checked_price);
+      console.log(checked_price);
+      
+      inputElements = document.getElementsByClassName('RAM');
+      // get the RAM
+      var checked_ram = [];
+      addToArray(inputElements,checked_ram);
+      console.log(checked_ram);
+      
+      inputElements = document.getElementsByClassName('Screen Size');
+      // get the screen options checked.
+      var checked_screen = [];  
+      addToArray(inputElements,checked_screen);
+      console.log(checked_screen);
+      
+      inputElements = document.getElementsByClassName('Camera');
+      // get the camera
+      var checked_camera = [];
+      addToArray(inputElements,checked_camera);
+      console.log(checked_camera);
+      
+      inputElements = document.getElementsByClassName('Internal Storage');
+      // get the internal storage
+      var checked_storage = [];
+      addToArray(inputElements, checked_storage);
+      console.log(checked_storage);
+      if(checked_price.length == 0 && checked_ram.length == 0 && checked_screen.length == 0 && checked_camera.length == 0 && checked_storage.length == 0){
+         // do nothing
+      } else {
+         removeGridIterator(all_items,'productlist');
+         //$('#hola').empty();
+         applyFilters(checked_price, checked_ram, checked_screen, checked_camera, checked_storage);
+      }
+   });
+}
+
+$(function() {   
    var ref = new Firebase('https://blinding-heat-6421.firebaseio.com/dummy');
    
    // add the header to each page
    $('#header').load('header.html');
-
-  
-   
-   /* function applyFilters() {         
-     var allVals = [];
-     $('#filters input:checked').each(function() {
-       allVals.push($(this).val());
-     });
-     console.log (allVals);   
-   }
-   
-   // when the filters are 
-   $('#button').click( function(){
-      applyFilters();
-   }); */
-   
+ 
    ref.on("value", function(snapshot) {
       console.log(snapshot.val()[0][0].price);
+      all_items = snapshot.val();
       addFilters();
-      addGridView(snapshot.val(), false,"productlist",true);
+      addGridViewIterator(snapshot.val(), false,"productlist",true);
+      addButton('hola');
       
    }, function (errorObject) {
    console.log("The read failed: " + errorObject.code);
