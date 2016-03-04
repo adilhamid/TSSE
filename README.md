@@ -8,9 +8,9 @@ By a Technology Shopping Support Environment (TSSE), we mean an interactive envi
 
 ### Information Extraction tools and sources
 * **[BigSemantics](https://github.com/ecologylab/BigSemantics/wiki#using-bigsemantics-in-web-applications)** has been used to extract metadata information for the smart phones. Following are the wrappers used to extract the information
-    - [Amazon](https://www.amazon.com/)
-    - [ebay](http://www.ebay.com/)
-    - [newegg](http://www.newegg.com/)
+    - [Amazon](https://www.amazon.com/) : It is used to get the price, ratings and reviews for the product.
+    - [ebay](http://www.ebay.com/) : It is used to get the image and full name for the product.
+    - [newegg](http://www.newegg.com/) : It is used to the specifcations for the product.
     
 ### Live Demo
 Use the TSSE web **[app](http://people.tamu.edu/~sumeet.singh/TSSE/)** . Click the get top mobile phones button, compare them and click to buy the one you like.
