@@ -1,5 +1,13 @@
 var per_item = 4;
-
+/**
+  * It adds the grid to html page iteratively. In one row global variable per_item decides the maximum number of columns in that row.
+  *
+  * @method addGridViewIterator
+  * @param {Array} items : They are the items to be added to grid view.
+  * @param {Boolean} wide_column : Whether to use wide or narrow columns for rows.
+  * @param {String} selector : Html node where we want to add the grid view.
+  * @param {Boolean} info : Whether to display the addtional info for the grid elements
+  */
 function addGridViewIterator(items,wide_column, selector,info) {
    var num_rows = 1;
    if((items.length % per_item) == 0) {
@@ -26,10 +34,16 @@ function addGridViewIterator(items,wide_column, selector,info) {
       }
       counter += per_item;
       var currentSelector = selector + (i+1).toString(); 
-      addGridView(current_batch,wide_column,currentSelector,info);
+      addGridViewRow(current_batch,wide_column,currentSelector,info);
    }
 }
 
+/**
+  * It removes the items from the grid iteratively
+  * @method removeGridIterator
+  * @param {Array} items : The items to be removed from the grid
+  * @param {String} selector : Html node from where we want to remove the grid.
+  */
 function removeGridIterator(items, selector) {
    var num_rows = 1;
    if((items.length % per_item) == 0) {
@@ -44,15 +58,28 @@ function removeGridIterator(items, selector) {
    }
 }
 
-function addToArray(inputElements, checked_array) { 
-   for(var i=0; inputElements[i]; ++i){
-      if(inputElements[i].checked) {
-         checked_array.push(inputElements[i].value);
+/**
+  * It is the utility function to add all the checked elements in input to output     
+  * @method addToArray
+  * @param {Array} input_elements : It contains all the input elements whether checked or unchecked
+  * @param {Array} checked_array : The output array of checked items. 
+  */
+function addToArray(input_elements, checked_array) { 
+   for(var i=0; input_elements[i]; ++i){
+      if(input_elements[i].checked) {
+         checked_array.push(input_elements[i].value);
          //console.log(inputElements[i].value);
       }
    }
 }
 
+/**
+  * Checks whetther the current item is within range for given type of item. Used to apply boundary filters
+  * @method evaluateBoundaries
+  * @param {Object} item : it contains the lower and upper limit for the given item type
+  * @param {Object} current_item : the item for which we want to chek wheter it is in range or not.
+  * @param {Number} type : Type for the item, 1 for price, 2 for screen_size and 3 for camera
+  */
 function evaluateBoundaries(item, current_item, type) {
    for(var i = 0; i < item.length; ++i) {
       
@@ -76,7 +103,15 @@ function evaluateBoundaries(item, current_item, type) {
    return false;
 }
 
-function addGridView(items,wide_column, selector, info) {
+/**
+  * Add a particular row for the grid view, called by the gridViewIterator.
+  * @method addGridViewRow
+  * @param {Array} items : They are the items to be added to row.
+  * @param {Boolean} wide_column : Whether to use wide or narrow columns for row.
+  * @param {String} selector : Html node where we want to add the row.
+  * @param {Boolean} info : Whether to display the addtional info for row elements
+  */
+function addGridViewRow(items,wide_column, selector, info) {
       
    $.each(items, function(i, value) {
       console.log(value);
@@ -146,6 +181,11 @@ function addGridView(items,wide_column, selector, info) {
    }); 
 }
 
+/**
+  * It adds the compare button to given selector.
+  * @method addButton
+  * @param {String} selector : Html node to which we want to add the compare button
+  */
 function addButton(selector) {
    $('#hola').append('<div class="panel panel-primary"><div class="text-center"><button class="btn btn-primary btn-block" id ="compareButton">Compare</button></div></div>');
    
@@ -165,6 +205,11 @@ function addButton(selector) {
    });
 }
 
+/**
+  * For the table view with given items to table node in the html page.
+  * @method addTableView
+  * @param {Array} items : The items to be added to table.
+  */
 function addTableView(items) {
     var str = "";
    

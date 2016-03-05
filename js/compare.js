@@ -1,3 +1,8 @@
+/**
+  * This method add the view to our compare page.
+  * @method addView
+  * @param {Array} items : items to be compared.
+  */
 function addView(items) {
     
     var phones_to_compare = localStorage.getItem('phones').split(',');
@@ -20,7 +25,7 @@ function addView(items) {
        }
     });
    
-   addGridView(common_phones,true,'productlist');
+   addGridViewRow(common_phones,true,'productlist');
    addTableView(common_phones);
 }
 
@@ -28,8 +33,11 @@ $(function() {
     // add the header to each page
    $('#header').load('header.html');
    //console.log(localStorage.getItem('phones'));
+   
+   // make refernce to firbase our backend.
    var ref = new Firebase('https://blinding-heat-6421.firebaseio.com/dummy');
 
+   // asynchronusly fetch the data from the backend.
    ref.on("value", function(snapshot) {
       console.log(snapshot.val()[0][0].price);
       addView(snapshot.val());   

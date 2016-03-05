@@ -26,6 +26,13 @@ var filter_obj = {'Price':price_obj,
                   'Internal Storage':internal_storage
                  };
 
+/**
+  * It apply the filters where we need to get the exact value for the facet. for example a particular value for RAM
+  * @method checkforEqualityFilter
+  * @param {Object} current_item : 
+  * @param {Array} ram : List of ram value
+  * @param {Array} internal_storage : List of internal storage values
+  */
 function checkforEqualityFilter(current_item,ram,internal_storage){
    var ram_true = false;
    var internal_storage_true = false;
@@ -53,6 +60,14 @@ function checkforEqualityFilter(current_item,ram,internal_storage){
    return (ram_true && internal_storage_true);
 }
 
+/**
+  * It apply the filters where we need to check in range for the facet. for example a particular value for Price range
+  * @method checkforRange
+  * @param {Object} current_item : 
+  * @param {Array} price : List of price ranges
+  * @param {Array} screen : List of screen size ranges
+  * @param {Array} camera : List of camera ranges
+  */
 function checkforRange(current_item, price,screen,camera) {
    var price_true = false;
    var screen_true = false;
@@ -85,6 +100,15 @@ function checkforRange(current_item, price,screen,camera) {
    return (price_true && screen_true && camera_true);
 }
 
+/**
+  * It apply all the filters specfied by the user
+  * @method : applyFilters
+  * @param {Array} price : List of price ranges
+  * @param {Array} ram : List of ram value
+  * @param {Array} screen : List of screen size ranges
+  * @param {Array} camera : List of camera ranges
+  * @param {Array} internal_storage : List of internal storage values
+  */
 function applyFilters(price, ram, screen, camera, internal_storage) {
    var filtered_phones = [];
    
@@ -96,7 +120,11 @@ function applyFilters(price, ram, screen, camera, internal_storage) {
    console.log(filtered_phones);
    addGridViewIterator(filtered_phones,false,"productlist",true);
 }
-          
+
+/**
+  * It add the filter option in the left pane
+  * @method addFilters
+  */
 function addFilters() {
     // inject the filters  
    var count_filters = 0; 
@@ -162,6 +190,7 @@ $(function() {
    // add the header to each page
    $('#header').load('header.html');
  
+   // asynchronusly fetch the data from the backend.
    ref.on("value", function(snapshot) {
       console.log(snapshot.val()[0][0].price);
       all_items = snapshot.val();
