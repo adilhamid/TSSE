@@ -1,4 +1,32 @@
-//globals
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: scripts.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: scripts.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>//globals
 //filters 
 var price_obj = {0:' Below $200' ,1:' $200 - $300',2:' Above $300'};
 var price_array_helper = ['0 200','200 300','300 1000'];
@@ -45,19 +73,19 @@ function checkforEqualityFilter(current_item,ram,internal_storage){
       internal_storage_true = true;
    }
    
-   for(var i = 0 ; i < ram.length; ++i) {
+   for(var i = 0 ; i &lt; ram.length; ++i) {
       if(current_item[0].ram.match(/\d+/)[0] == ram[i]) {
          ram_true = true;
       }
    }
    
-   for(var i = 0 ; i < internal_storage.length; ++i) {
+   for(var i = 0 ; i &lt; internal_storage.length; ++i) {
       if(current_item[0].internal_storage.match(/\d+/)[0] == internal_storage[i]) {
          internal_storage_true = true;
       }
    }
    
-   return (ram_true && internal_storage_true);
+   return (ram_true &amp;&amp; internal_storage_true);
 }
 
 /**
@@ -97,7 +125,7 @@ function checkforRange(current_item, price,screen,camera) {
       camera_true = true;
    }
 
-   return (price_true && screen_true && camera_true);
+   return (price_true &amp;&amp; screen_true &amp;&amp; camera_true);
 }
 
 /**
@@ -113,7 +141,7 @@ function applyFilters(price, ram, screen, camera, internal_storage) {
    var filtered_phones = [];
    
    $.each(all_items, function(i, value) {
-      if(checkforEqualityFilter(value, ram, internal_storage) && checkforRange(value, price, screen, camera)){
+      if(checkforEqualityFilter(value, ram, internal_storage) &amp;&amp; checkforRange(value, price, screen, camera)){
          filtered_phones.push(value);
       }
    });
@@ -129,16 +157,16 @@ function addFilters() {
     // inject the filters  
    var count_filters = 0; 
    $.each(filter_obj, function(i,val) {
-      $('#filters').append('<li class="sidebar-brand"><p class="text-primary" id ="heading"><label><b>'+i+'</b></label><p></li>');
+      $('#filters').append('&lt;li class="sidebar-brand">&lt;p class="text-primary" id ="heading">&lt;label>&lt;b>'+i+'&lt;/b>&lt;/label>&lt;p>&lt;/li>');
       $.each(val, function(inner_i, inner_val) {
-         $('#filters').append('<li class="sidebar-brand"><label><input type="checkbox" class="' + i + '" value="' + overall_helper[count_filters] + '">'+ inner_val + '</label></li>');
+         $('#filters').append('&lt;li class="sidebar-brand">&lt;label>&lt;input type="checkbox" class="' + i + '" value="' + overall_helper[count_filters] + '">'+ inner_val + '&lt;/label>&lt;/li>');
          ++count_filters;
       });
-      $('#filters').append('<br />');
+      $('#filters').append('&lt;br />');
    });
    
    // add the button for submittind filter
-   $('#filters').append('<li class="sidebar-brand"><button type="submit" class="btn btn-primary" id="button">Submit</button></li>');
+   $('#filters').append('&lt;li class="sidebar-brand">&lt;button type="submit" class="btn btn-primary" id="button">Submit&lt;/button>&lt;/li>');
    
    $('#button').click( function(){
       //$('#productlist').empty();
@@ -173,7 +201,7 @@ function addFilters() {
       var checked_storage = [];
       addToArray(inputElements, checked_storage);
       console.log(checked_storage);
-      if(checked_price.length == 0 && checked_ram.length == 0 && checked_screen.length == 0 && checked_camera.length == 0 && checked_storage.length == 0){
+      if(checked_price.length == 0 &amp;&amp; checked_ram.length == 0 &amp;&amp; checked_screen.length == 0 &amp;&amp; checked_camera.length == 0 &amp;&amp; checked_storage.length == 0){
          removeGridIterator(all_items,'productlist');
          addGridViewIterator(all_items, false, 'productlist', true);
       } else {
@@ -203,3 +231,26 @@ $(function() {
    });
   
 });
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#addButton">addButton</a></li><li><a href="global.html#addFilters">addFilters</a></li><li><a href="global.html#addGridViewIterator">addGridViewIterator</a></li><li><a href="global.html#addGridViewRow">addGridViewRow</a></li><li><a href="global.html#addTableView">addTableView</a></li><li><a href="global.html#addToArray">addToArray</a></li><li><a href="global.html#addView">addView</a></li><li><a href="global.html#applyFilters">applyFilters</a></li><li><a href="global.html#checkforEqualityFilter">checkforEqualityFilter</a></li><li><a href="global.html#checkforRange">checkforRange</a></li><li><a href="global.html#evaluateBoundaries">evaluateBoundaries</a></li><li><a href="global.html#removeGridIterator">removeGridIterator</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri Mar 04 2016 19:21:23 GMT-0600 (CST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
