@@ -248,3 +248,20 @@ function addTableView(items) {
    $('#table').append(str);
 }
 
+/**
+ * This function add the search bar at the bottom of the mobiles
+ * @method addSearchbar
+ */
+function addSearchbar() {
+    $('#searchbar').append('<input type="submit"value="Search" style="float: right" class="btn btn-primary" id = "search" /><div style="overflow: hidden; padding-right: .5em;"><input type="text" style="width: 100%; height: 35px;" placeholder="What are you searching for?" id ="searchfield" /></div>');
+    $('#search').click(function () {
+     console.log($('#searchfield').val()); 
+     var query = $('#searchfield').val();
+     if(query) {
+        document.location.href = 'mobiles.html?id=' + query; 
+     } else {
+        alert('Please enter some value in search bar');
+     }      
+   });
+}
+

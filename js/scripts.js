@@ -184,19 +184,54 @@ function addFilters() {
    });
 }
 
+/**
+  *To get the parameter by name for the url
+  * @method getParameterByName
+  * @param {String} name : name of the parameter
+  * @param {String} url : the url from whihc we want to get the parameter
+  */
+function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
 $(function() {   
    var ref = new Firebase('https://blinding-heat-6421.firebaseio.com/dummy');
    
    // add the header to each page
    $('#header').load('header.html');
- 
+   
    // asynchronusly fetch the data from the backend.
    ref.on("value", function(snapshot) {
       console.log(snapshot.val()[0][0].price);
       all_items = snapshot.val();
       addFilters();
-      addGridViewIterator(snapshot.val(), false,"productlist",true);
-      addButton('hola');
+      
+      console.log(getParameterByName('id'));
+      if(getParameterByName('id')) {
+         var query = getParameterByName('id');
+         var phones = [];
+         $.each(snapshot.val(), function(i, value) {
+            if(value[0].name.toLowerCase().indexOf(query) != -1){
+               phones.push(value)
+            }
+         });
+         addGridViewIterator(phones, false,"productlist",true);
+         all_items = phones;
+         if(phones.length != 0) {
+            addButton('hola');
+         }
+      } else {
+         addGridViewIterator(snapshot.val(), false,"productlist",true);  
+         addButton('hola');
+      }    
+      
+      addSearchbar();
       
    }, function (errorObject) {
    console.log("The read failed: " + errorObject.code);
