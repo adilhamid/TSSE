@@ -20,5 +20,5 @@ Use the TSSE web **[app](http://people.tamu.edu/~sumeet.singh/TSSE/)** . Click t
 
 ### Bioler plate code used
 Some of the html/css code has been used from the following source to start with.
-* **[Shop Home Page](https://github.com/BlackrockDigital/startbootstrap-shop-homepage)**
-* **[Side bar Navigation](https://github.com/BlackrockDigital/startbootstrap-simple-sidebar)**
+* **[Shop Home Page](https://github.com/BlackrockDigital/startbootstrap-shop-homepage)** Css has been borrowed for carousel on the home page.
+* **[Side bar Navigation](https://github.com/BlackrockDigital/startbootstrap-simple-sidebar)** Css has been borrowed for left pane of facets.
