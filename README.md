@@ -15,6 +15,9 @@ By a Technology Shopping Support Environment (TSSE), we mean an interactive envi
 ### Live Demo
 Use the TSSE web **[app](http://people.tamu.edu/~sumeet.singh/TSSE/)** . Click the get top mobile phones button, compare them and click to buy the one you like.
 
+### Architecture Diagram
+![alt text](http://imgur.com/xzoy9H5.png)
+
 ### Bioler plate code used
 Some of the html/css code has been used from the following source to start with.
 * **[Shop Home Page](https://github.com/BlackrockDigital/startbootstrap-shop-homepage)**
