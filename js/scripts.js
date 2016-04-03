@@ -1,21 +1,21 @@
 //globals
 //filters 
-var price_obj = {0:' Below $200' ,1:' $200 - $300',2:' Above $300'};
+var price_obj = {0:' Below $200' ,1:' $200 - $300',2:' $300 & Above'};
 var price_array_helper = ['0 200','200 300','300 1000'];
 
-var ram_obj = {0:' 1GB',1:' 2GB',2:' 4GB'};
-var ram_helper_array = [1,2,4];
+var ram_obj = {0:' 1GB',1:' 2GB', 2: ' 3GB', 3:' 4GB'};
+var ram_helper_array = [1,2,3,4];
 
-var screen_size_obj = {0:' 4.3 - 4.7 inch', 1:' 4.7 - 5.7 inch', 2:' Above 5.7 inch'};
+var screen_size_obj = {0:' 4.3 - 4.7 inch', 1:' 4.7 - 5.7 inch', 2:' 5.7 inch & Above'};
 var screen_helper_array = ['4.3 4.7', '4.7 5.7','5.7 6.7'];
 
-var camera_obj = {0:' Upto 2MP', 1:' 2.0 - 5.0 MP', 2:' 5.0 - 8.0 MP',3:' Above 8.0 MP'};
+var camera_obj = {0:' Upto 2MP', 1:' 2.0 - 5.0 MP', 2:' 5.0 - 8.0 MP',3:' 8.0 MP & Above'};
 var camera_helper = ['0 2','2 5','5 8','8 30'];
 
 var internal_storage = {0:' 8GB', 1:' 16 GB', 2:' 32 GB', 3:' 64 GB'};
 var internal_storage_helper = [8,16, 32, 64];
 
-var overall_helper = ['0 200','200 300','300 1000', 1, 2, 4, '4.3 4.7', '4.7 5.7', '5.7 6.7', '0 2','2 5','5 8','8 30', 8, 16, 32, 64];
+var overall_helper = ['0 200','200 300','300 1000', 1, 2,3,4, '4.3 4.7', '4.7 5.7', '5.7 6.7', '0 2','2 5','5 8','8 30', 8, 16, 32, 64];
 var all_items = null;
 
 
@@ -118,6 +118,9 @@ function applyFilters(price, ram, screen, camera, internal_storage) {
       }
    });
    console.log(filtered_phones);
+   if(filtered_phones.length == 0) {
+      $('#productlist1').append('<h4><b>No Matches Found</b></h4>');
+   }
    addGridViewIterator(filtered_phones,false,"productlist",true);
 }
 
@@ -138,7 +141,7 @@ function addFilters() {
    });
    
    // add the button for submittind filter
-   $('#filters').append('<li class="sidebar-brand"><button type="submit" class="btn btn-primary" id="button">Submit</button></li>');
+   $('#filters').append('<li class="sidebar-brand"><button type="submit" class="btn btn-primary" id="button">Apply</button></li>');
    
    $('#button').click( function(){
       //$('#productlist').empty();
@@ -217,7 +220,7 @@ $(function() {
          var query = getParameterByName('id');
          var phones = [];
          $.each(snapshot.val(), function(i, value) {
-            if(value[0].name.toLowerCase().indexOf(query) != -1){
+            if(value[0].name.toLowerCase().indexOf(query.toLowerCase()) != -1){
                phones.push(value)
             }
          });

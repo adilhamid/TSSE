@@ -126,18 +126,18 @@ function addGridViewRow(items,wide_column, selector, info) {
       
       var rating = value[0].rating;    
       rating = rating.split(" ")[0];
+      var full_name = value[0].name.split(" ");
      
       var reviews = value[0].reviews_location;
       console.log(image);
       str += '<h4 class="text-center"><span class="label label-info">' + company + '</span></h4>'
       //str += '<div class=caption>'
-      str += '<a href =' + reviews + ' ><img src='+ image + ' class="img-responsive"></a>'
-      str += '<p class="text-center"><b> Click image to buy!</b></p>';
+      str += '<a href = mobile.html?id=' + full_name + ' ><img src='+ image + ' class="img-responsive"></a>'
+      str += '<p class="text-center"><b> Click image to get more information!</b></p>';
       str += '<div class="caption"><div class="row">'
       str += '<div class="col-md-6 col-xs-6">';
       var name = "";
-      var full_name = value[0].name.split(" ");
-      
+     
       for(var i = 1; i < full_name.length; ++i){
          name += (full_name[i] + " ");
       }
@@ -161,7 +161,7 @@ function addGridViewRow(items,wide_column, selector, info) {
                 
       str += '<div class="row">';
       
-      str += '<div class="col-md-6 col-xs-6"><a href="' + reviews + '" class="btn btn-success btn-product"><span class="glyphicon glyphicon-book"></span> Reviews</a></div>';
+      str += '<div class="col-md-6 col-xs-6"><a href=mobile.html?id=' + full_name +  ' class="btn btn-success btn-product"><span class="glyphicon glyphicon-book"></span> Reviews</a></div>';
       
       str += '<div class="col-md-6 col-xs-6"><a href="#" class="btn btn-primary btn-product"><span class="glyphicon glyphicon-star"></span> '+ rating + ' / 5.0' +'</a></div>';
       
@@ -170,7 +170,7 @@ function addGridViewRow(items,wide_column, selector, info) {
       str += '<br/>';
       
       if(info){
-         str += '<label><input type="checkbox" class = "compareCheckbox" value="' + name + '" > Check to compare</label>';   
+         str += '<label><input type="checkbox" class = "compareCheckbox" value="' + name + '" > Check to compare and click compare button at bottom</label>';   
       }
       
       str += '</div>';    
@@ -249,11 +249,27 @@ function addTableView(items) {
 }
 
 /**
+  *To get the parameter by name for the url
+  * @method getParameterByName
+  * @param {String} name : name of the parameter
+  * @param {String} url : the url from whihc we want to get the parameter
+  */
+function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
+/**
  * This function add the search bar at the bottom of the mobiles
  * @method addSearchbar
  */
 function addSearchbar() {
-    $('#searchbar').append('<input type="submit"value="Search" style="float: right" class="btn btn-primary" id = "search" /><div style="overflow: hidden; padding-right: .5em;"><input type="text" style="width: 100%; height: 35px;" placeholder="What are you searching for?" id ="searchfield" /></div>');
+    $('#searchbar').append('<input type="submit"value="Search" style="float: right" class="btn btn-primary" id = "search" /><div style="overflow: hidden; padding-right: .5em;"><input type="text" style="width: 100%; height: 35px;" placeholder="Search for brand" id ="searchfield" /></div>');
     $('#search').click(function () {
      console.log($('#searchfield').val()); 
      var query = $('#searchfield').val();
@@ -263,5 +279,53 @@ function addSearchbar() {
         alert('Please enter some value in search bar');
      }      
    });
+}
+
+/**
+  * Add the initial infromation for device details page.
+  * @method addInitialInfo
+  * @param {Array} item : The item for which the initial information needs to be added to device detail page.
+  */
+function addInitialInfo(item) {
+   var str = "";
+   console.log(item);
+    $('#main-image').append('<img id="item-display" src="' + item[0].image+ '" alt=""></img>');
+    $('#side-image').append('<a id="item-1" class="service1-item"><img src="' +item[0].image + '" alt=""></img></a><a id="item-2" class="service1-item"><img src="' + item[0].image + '" alt=""></img></a><a id="item-3" class="service1-item"><img src="' + item[0].image + '"></img></a>');
+    str += '<div class="product-title">' + item[0].name + '</div>';
+    str += '<div class="product-rating"><a href="#" class="btn btn-primary btn-product"><span class="glyphicon glyphicon-star"></span>' + item[0].rating + '</a></div><p></p>';
+    str += '<div class="product-price">' + item[0].price + '</div><p></p><a href="' + item[0].reviews_location + '"><div class="btn-group cart"><button type="button" class="btn btn-success">Buy on Amazon </button></div></a>';  
+    $('#summary').append(str);
+   
+    str = "";
+    str += item[0].description;
+    str += '<h3>' + item[0].name + ' Features: </h3>';
+    str += '<li> <b>Screen Size: </b>' + item[0].screen_size + ' inches</li>';
+    str += '<li> <b>Ram: </b>' + item[0].ram + '</li>';
+    str += '<li> <b>Internal Storage: </b>' + item[0].internal_storage + '</li>';
+    str += '<li> <b>Camera: </b>' + item[0].camera + '</li>';
+    $('#product-info').append(str);
+    
+}
+
+/**
+  * Add the review infromation for device details page.
+  * @method addReviewInfo
+  * @param {Array} item : The item for which the review information needs to be added to device detail page.
+  */
+function addReviewInfo(item) {
+    var str = "";
+    $.each(item[0].reviews, function(i, value) {
+       str = "";
+       str += '<p>';
+       var num = value.rating.match(/\d+/)[0];
+       console.log(num);
+       for(var i = 0; i < num; ++i) {
+          str += '<i class="fa fa-star gold"></i>';
+       }
+       str += ' <b>' + value.title + '</b>';
+       str += '<ul><li>' + value.description +'</li></ul><p>';
+       $('#service-two-id').append(str);
+    });
+  
 }
 

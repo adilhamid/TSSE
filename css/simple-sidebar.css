@@ -47,9 +47,9 @@
     margin-right: -250px;
 }
 #heading {
-    text-indent: 20px;
-    line-height: 15px;
-    font-size: 18px;
+    text-indent: 10px;
+    line-height: 10px;
+    font-size: 13px;
 }
 
 #compare {
@@ -68,8 +68,8 @@
 }
 
 .sidebar-nav li {
-    text-indent: 20px;
-    line-height: 15px;
+    text-indent: 2px;
+    line-height: 2px;
 }
 
 .sidebar-nav li a {
